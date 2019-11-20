@@ -1,7 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+/// <summary>
+/// Instantiate objects which throw out to character
+/// </summary>
 public class Throw : MonoBehaviour {
 
 	public GameObject spherePrefab;
@@ -10,8 +11,8 @@ public class Throw : MonoBehaviour {
 	public Material red;
 
 	VoidPerceptron p;
+    
 
-	// Use this for initialization
 	void Start () {
 		p = GetComponent<VoidPerceptron>();
 	}
@@ -48,4 +49,3 @@ public class Throw : MonoBehaviour {
 		}
 	}
 }
-

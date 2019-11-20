@@ -1,8 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+/// <summary>
+/// Store bool fields about walls, crash count, distance travelled, set direction via ray casts
+/// </summary>
 public class BirdBrain : MonoBehaviour {
+
+    #region fields
 
     int DNALength = 5;
     public Dna dna;
@@ -18,6 +21,13 @@ public class BirdBrain : MonoBehaviour {
     bool alive = true;
     Rigidbody2D rb;
 
+    #endregion
+
+    #region methods
+
+    /// <summary>
+    /// Initialize DNA, start values
+    /// </summary>
     public void Init()
     {
         //initialise DNA
@@ -26,9 +36,9 @@ public class BirdBrain : MonoBehaviour {
         //2 downwall
         //3 normal upward
         dna = new Dna(DNALength, 200);
-        this.transform.Translate(Random.Range(-1.5f, 1.5f), Random.Range(-1.5f, 1.5f), 0);
-        startPosition = this.transform.position;
-        rb = this.GetComponent<Rigidbody2D>();
+        transform.Translate(Random.Range(-1.5f, 1.5f), Random.Range(-1.5f, 1.5f), 0);
+        startPosition = transform.position;
+        rb = GetComponent<Rigidbody2D>();
     }
 
     void OnCollisionEnter2D(Collision2D col)
@@ -42,8 +52,6 @@ public class BirdBrain : MonoBehaviour {
             crash++;
         }
     }
-    
-
 
     void Update()
     {
@@ -89,7 +97,9 @@ public class BirdBrain : MonoBehaviour {
         timeAlive = PopulationManager.elapsed;
     }
 
-
+    /// <summary>
+    /// Set value via bool fields and calculate direction
+    /// </summary>
     void FixedUpdate()
     {
         if (!alive) return;
@@ -119,8 +129,9 @@ public class BirdBrain : MonoBehaviour {
             h = dna.GetGene(4);
         }
 
-        rb.AddForce(this.transform.right * v);
-        rb.AddForce(this.transform.up * h * 0.1f);
-        distanceTravelled = Vector3.Distance(startPosition, this.transform.position);
+        rb.AddForce(transform.right * v);
+        rb.AddForce(transform.up * h * 0.1f);
+        distanceTravelled = Vector3.Distance(startPosition, transform.position);
     }
+    #endregion
 }

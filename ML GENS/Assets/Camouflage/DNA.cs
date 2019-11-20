@@ -1,9 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+/// <summary>
+/// RGB, size, time to die
+/// </summary>
 public class DNA : MonoBehaviour {
 
+    #region fields
     public float r;
     public float g;
     public float b;
@@ -13,7 +15,9 @@ public class DNA : MonoBehaviour {
     public float timeToDie = 0;
     SpriteRenderer sRenderer;
     Collider2D sCollider;
+    #endregion
 
+    #region methods
     private void OnMouseDown()
     {
         isDead = true;
@@ -23,16 +27,11 @@ public class DNA : MonoBehaviour {
         sCollider.enabled = false;
     }
     
-    // Use this for initialization
     void Start () {
         sRenderer = GetComponent<SpriteRenderer>();
         sCollider = GetComponent<Collider2D>();
         sRenderer.color = new Color(r, g, b);
         transform.localScale = new Vector3(size, size, size);
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    #endregion
 }

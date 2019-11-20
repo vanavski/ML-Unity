@@ -1,9 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+/// <summary>
+/// Set direction for character
+/// </summary>
 public class BrainMaze : MonoBehaviour {
 
+    #region fields
     private int DNALength = 2;
     public Dna dna;
     public GameObject eyes;
@@ -11,6 +13,10 @@ public class BrainMaze : MonoBehaviour {
     Vector3 startPosition;
     public float distanceTravelled = 0;
     bool alive = true;
+
+    #endregion
+
+    #region methods
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -26,8 +32,7 @@ public class BrainMaze : MonoBehaviour {
         dna = new Dna(DNALength, 360);
         startPosition = transform.position;
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
         if (!alive) return;
@@ -40,6 +45,9 @@ public class BrainMaze : MonoBehaviour {
                 seeWall = true;
     }
 
+    /// <summary>
+    /// set translate, rotate and distance travelled
+    /// </summary>
     void FixedUpdate()
     {
         if (!alive) return;
@@ -54,4 +62,6 @@ public class BrainMaze : MonoBehaviour {
         transform.Rotate(0, h, 0);
         distanceTravelled = Vector3.Distance(startPosition, transform.position);
     }
+
+    #endregion
 }

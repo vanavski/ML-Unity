@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
@@ -10,15 +9,21 @@ public class VoidTrainingSet
     public double output;
 }
 
+/// <summary>
+/// Simple perceptron for void a ball
+/// </summary>
 public class VoidPerceptron : MonoBehaviour
 {
+    #region fields
     List<TrainingSet> ts = new List<TrainingSet>();
     double[] weights = { 0, 0 };
     double bias = 0;
     double totalError = 0;
 
     public GameObject npc;
+    #endregion
 
+    #region methods
     public void SendInput(double i1, double i2, double o)
     {
         //react
@@ -42,18 +47,24 @@ public class VoidPerceptron : MonoBehaviour
         Train();
     }
 
-    double DotProductBias(double[] v1, double[] v2)
+    /// <summary>
+    /// logistic regression
+    /// </summary>
+    /// <param name="weights"></param>
+    /// <param name="inputs"></param>
+    /// <returns></returns>
+    double DotProductBias(double[] weights, double[] inputs)
     {
-        if (v1 == null || v2 == null)
+        if (weights == null || inputs == null)
             return -1;
 
-        if (v1.Length != v2.Length)
+        if (weights.Length != inputs.Length)
             return -1;
 
         double d = 0;
-        for (int x = 0; x < v1.Length; x++)
+        for (int x = 0; x < weights.Length; x++)
         {
-            d += v1[x] * v2[x];
+            d += weights[x] * inputs[x];
         }
 
         d += bias;
@@ -63,22 +74,31 @@ public class VoidPerceptron : MonoBehaviour
 
     double CalcOutput(int i)
     {
-        return (ActivationFunction(DotProductBias(weights, ts[i].input)));
+        return ActivationFunction(DotProductBias(weights, ts[i].input));
     }
 
+    /// <summary>
+    /// Get binary system via values
+    /// </summary>
+    /// <param name="i1"></param>
+    /// <param name="i2"></param>
+    /// <returns></returns>
     double CalcOutput(double i1, double i2)
     {
         double[] inp = new double[] { i1, i2 };
-        return (ActivationFunction(DotProductBias(weights, inp)));
+        return ActivationFunction(DotProductBias(weights, inp));
     }
 
     double ActivationFunction(double dp)
     {
-        if (dp > 0) return (1);
-        return (0);
+        if (dp > 0) return 1;
+        return 0;
     }
 
-    void InitialiseWeights()
+    /// <summary>
+    /// random all weights and bias
+    /// </summary>
+    void InitializeWeights()
     {
         for (int i = 0; i < weights.Length; i++)
         {
@@ -87,6 +107,10 @@ public class VoidPerceptron : MonoBehaviour
         bias = Random.Range(-1.0f, 1.0f);
     }
 
+    /// <summary>
+    /// reset weights and bias via error
+    /// </summary>
+    /// <param name="j"></param>
     void UpdateWeights(int j)
     {
         double error = ts[j].output - CalcOutput(j);
@@ -131,14 +155,14 @@ public class VoidPerceptron : MonoBehaviour
 
     void Start()
     {
-        InitialiseWeights();
+        InitializeWeights();
     }
 
     void Update()
     {
         if (Input.GetKeyDown("space"))
         {
-            InitialiseWeights();
+            InitializeWeights();
             ts.Clear();
         }
         else if (Input.GetKeyDown("s"))
@@ -146,4 +170,6 @@ public class VoidPerceptron : MonoBehaviour
         else if (Input.GetKeyDown("l"))
             LoadWeights();
     }
+
+    #endregion
 }

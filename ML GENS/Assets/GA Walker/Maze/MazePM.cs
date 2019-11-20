@@ -1,10 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+/// <summary>
+/// Population manager for labirint
+/// </summary>
 public class MazePM : MonoBehaviour {
 
+    #region fields
     public GameObject botPrefab;
     public GameObject startPos;
     public int populationSize = 50;
@@ -14,6 +17,10 @@ public class MazePM : MonoBehaviour {
     int generation = 1;
 
     GUIStyle guiStyle = new GUIStyle();
+
+    #endregion
+
+    #region methods like Runners
     private void OnGUI()
     {
         guiStyle.fontSize = 25;
@@ -31,7 +38,6 @@ public class MazePM : MonoBehaviour {
     {
         for (int i = 0; i < populationSize; i++)
         {
-            //Vector3 startingPos = new Vector3(transform.position.x + Random.Range(-2, 2), transform.position.y, transform.position.z + Random.Range(-2, 2));
             GameObject bot = Instantiate(botPrefab, startPos.transform.position, transform.rotation);
             bot.GetComponent<BrainMaze>().Init();
             population.Add(bot);
@@ -40,7 +46,6 @@ public class MazePM : MonoBehaviour {
 
     GameObject Breed(GameObject parent1, GameObject parent2)
     {
-        //Vector3 startingPos = new Vector3(transform.position.x + Random.Range(-5, 5), transform.position.y, transform.position.z + Random.Range(-5, 5));
         GameObject offspring = Instantiate(botPrefab, startPos.transform.position, transform.rotation);
         BrainMaze brain = offspring.GetComponent<BrainMaze>();
         if (Random.Range(0, 100) == 1)
@@ -83,4 +88,6 @@ public class MazePM : MonoBehaviour {
             elapsed = 0;
         }
     }
+
+    #endregion
 }

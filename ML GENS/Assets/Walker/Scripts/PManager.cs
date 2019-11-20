@@ -1,10 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+/// <summary>
+/// Runners manager. Instantiate characters and teach it alive more time via directions.
+/// </summary>
 public class PManager : MonoBehaviour
 {
+    #region fields
     public GameObject botPrefab;
     public int populationSize = 50;
     List<GameObject> population = new List<GameObject>();
@@ -13,6 +16,13 @@ public class PManager : MonoBehaviour
     int generation = 1;
 
     GUIStyle guiStyle = new GUIStyle();
+
+    #endregion
+
+    #region methods
+    /// <summary>
+    /// Show generation and time
+    /// </summary>
     private void OnGUI()
     {
         guiStyle.fontSize = 25;
@@ -37,6 +47,12 @@ public class PManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Mix direction from 2 persons
+    /// </summary>
+    /// <param name="p1"></param>
+    /// <param name="p2"></param>
+    /// <returns></returns>
     GameObject Breed(GameObject parent1, GameObject parent2)
     {
         Vector3 startingPos = new Vector3(transform.position.x + Random.Range(-2, 2), transform.position.y, transform.position.z + Random.Range(-2, 2));
@@ -55,6 +71,9 @@ public class PManager : MonoBehaviour
         return offspring;
     }
 
+    /// <summary>
+    /// Sort populations by time to die and breed it
+    /// </summary>
     void BreedNewPopulation()
     {
         List<GameObject> sortedList = population.OrderBy(o => o.GetComponent<Brain>().timeAlive).ToList();
@@ -71,8 +90,7 @@ public class PManager : MonoBehaviour
         }
         generation++;
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
         elapsed += Time.deltaTime;
@@ -82,4 +100,5 @@ public class PManager : MonoBehaviour
             elapsed = 0;
         }
     }
+    #endregion
 }

@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.Characters.ThirdPerson;
 
+/// <summary>
+/// brain of character
+/// </summary>
 [RequireComponent(typeof(ThirdPersonCharacter))]
 public class Brain : MonoBehaviour {
 
+    #region fields
     public int DNALength = 1;
     public float timeAlive;
     public Dna dna;
@@ -14,6 +18,9 @@ public class Brain : MonoBehaviour {
     private Vector3 move;
     private bool jump;
     private bool alive = true;
+    #endregion
+
+    #region methods
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -21,6 +28,9 @@ public class Brain : MonoBehaviour {
             alive = false;
     }
 
+    /// <summary>
+    /// Initialize dna, character and alive values
+    /// </summary>
     public void Init()
     {
         dna = new Dna(DNALength, 6);
@@ -29,6 +39,9 @@ public class Brain : MonoBehaviour {
         alive = true;
     }
 
+    /// <summary>
+    /// Choose direction by gen value
+    /// </summary>
     public void FixedUpdate()
     {
         float h = 0;
@@ -59,14 +72,5 @@ public class Brain : MonoBehaviour {
         jump = false;
         if (alive) timeAlive += Time.deltaTime;
     }
-
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+#endregion
 }

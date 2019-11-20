@@ -1,20 +1,28 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Store gene with dna length and count if  abilities and genetic algorithm functionallity
+/// </summary>
 public class Dna : MonoBehaviour {
 
+    #region fields
     List<int> genes = new List<int>();
     int dnaLength = 0;
-    int maxValue = 0;
+    int maxValue = 0; //count of abilities
+    #endregion
 
-    public Dna(int length, int value)
+    #region methods
+    public Dna(int length, int maxValue)
     {
         dnaLength = length;
-        maxValue = value;
+        this.maxValue = maxValue;
         SetRandom();
     }
 
+    /// <summary>
+    /// Set random ability
+    /// </summary>
     public void SetRandom()
     {
         genes.Clear();
@@ -24,11 +32,21 @@ public class Dna : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Set value for specific gene by position
+    /// </summary>
+    /// <param name="pos"></param>
+    /// <param name="value"></param>
     public void SetInt(int pos, int value)
     {
         genes[pos] = value;
     }
 
+    /// <summary>
+    /// Mix gens
+    /// </summary>
+    /// <param name="d1"></param>
+    /// <param name="d2"></param>
     public void Combine(Dna d1, Dna d2)
     {
         for(int i = 0; i < dnaLength; i++)
@@ -45,6 +63,9 @@ public class Dna : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Some random mutate value in gens
+    /// </summary>
     public void Mutate()
     {
         genes[Random.Range(0, dnaLength)] = Random.Range(0, maxValue);
@@ -54,14 +75,5 @@ public class Dna : MonoBehaviour {
     {
         return genes[pos];
     }
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+#endregion
 }

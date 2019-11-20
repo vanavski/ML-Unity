@@ -1,10 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+/// <summary>
+/// Instantiate birds and breed values
+/// </summary>
 public class BirdPM : MonoBehaviour {
 
+    #region fields
     public GameObject botPrefab;
     public GameObject startingPos;
     public int populationSize = 50;
@@ -14,6 +17,10 @@ public class BirdPM : MonoBehaviour {
     int generation = 1;
 
     GUIStyle guiStyle = new GUIStyle();
+    #endregion
+
+    #region methods
+
     void OnGUI()
     {
         guiStyle.fontSize = 25;
@@ -25,14 +32,12 @@ public class BirdPM : MonoBehaviour {
         GUI.Label(new Rect(10, 75, 200, 30), "Population: " + population.Count, guiStyle);
         GUI.EndGroup();
     }
-
-
-    // Use this for initialization
+    
     void Start()
     {
         for (int i = 0; i < populationSize; i++)
         {
-            GameObject b = Instantiate(botPrefab, startingPos.transform.position, this.transform.rotation);
+            GameObject b = Instantiate(botPrefab, startingPos.transform.position, transform.rotation);
             b.GetComponent<BirdBrain>().Init();
             population.Add(b);
         }
@@ -61,14 +66,13 @@ public class BirdPM : MonoBehaviour {
         List<GameObject> sortedList = population.OrderBy(o => (o.GetComponent<BirdBrain>().distanceTravelled - o.GetComponent<BirdBrain>().crash)).ToList();
 
         population.Clear();
-        for (int i = (int)(3 * sortedList.Count / 4.0f) - 1; i < sortedList.Count - 1; i++)
+        for (int i = 3 * sortedList.Count / - 1; i < sortedList.Count - 1; i++)
         {
             population.Add(Breed(sortedList[i], sortedList[i + 1]));
             population.Add(Breed(sortedList[i + 1], sortedList[i]));
             population.Add(Breed(sortedList[i], sortedList[i + 1]));
             population.Add(Breed(sortedList[i + 1], sortedList[i]));
         }
-        
         //destroy all parents and previous population
         for (int i = 0; i < sortedList.Count; i++)
         {
@@ -76,8 +80,7 @@ public class BirdPM : MonoBehaviour {
         }
         generation++;
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
         elapsed += Time.deltaTime;
@@ -87,4 +90,5 @@ public class BirdPM : MonoBehaviour {
             elapsed = 0;
         }
     }
+    #endregion
 }
