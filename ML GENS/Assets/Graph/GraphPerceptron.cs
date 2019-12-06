@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [System.Serializable]
 public class GraphTrainingSet
@@ -11,13 +9,15 @@ public class GraphTrainingSet
 
 public class GraphPerceptron : MonoBehaviour
 {
-
+    #region fields
     public GraphTrainingSet[] trainingSet;
     double[] weights = { 0, 0 };
     double bias = 0;
 
     public SimpleGrapher simpleGraph;
+    #endregion
 
+    #region methods
     double DotProductBias(double[] v1, double[] v2)
     {
         if (v1 == null || v2 == null)
@@ -114,4 +114,5 @@ public class GraphPerceptron : MonoBehaviour
             simpleGraph.DrawPoint(0.8f, 0.1f, Color.yellow);
 
     }
+    #endregion
 }

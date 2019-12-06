@@ -1,19 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class SimpleGrapher : MonoBehaviour {
 
-	public int scale = 500;
+    #region fields
+    public int scale = 500;
 	public int xoffset = 100;
 	public int yoffset = 100;
 	RawImage render;
 	Texture2D texture;
 	Texture2D graph;
 	Color[] colours;
+    #endregion
 
-	void Circle (int cx, int cy, int r, Color col) 
+    #region methods
+    void Circle (int cx, int cy, int r, Color col) 
 	{
         texture = GetComponent<RawImage>().texture as Texture2D;
 	    int y = r;
@@ -150,9 +151,5 @@ public class SimpleGrapher : MonoBehaviour {
         texture.Apply();
         render.texture = texture;
     }
-
-	// Use this for initialization
-	void Start () {
-		
-	}
+    #endregion
 }

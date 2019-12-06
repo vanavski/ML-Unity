@@ -3,14 +3,16 @@ using UnityEngine;
 
 public class ANN
 {
-
+    #region fields
     public int numInputs; // count of neurons which come in network right the start
     public int numOutputs; // count of outputs
     public int numHidden; // count of layers between inputs and outputs
     public int numNPerHidden; //how many neurons do u want in ur layer
     public double alpha; //learning rates
     List<Layer> layers = new List<Layer>();
+    #endregion
 
+    #region Methods
     public ANN(int inputsCount, int outputsCount, int hiddenLayersCount, int neuronsInLayerCount, double alpha)
     {
         numInputs = inputsCount;
@@ -36,6 +38,12 @@ public class ANN
         }
     }
 
+    /// <summary>
+    /// Calculate new values
+    /// </summary>
+    /// <param name="inputValues"></param>
+    /// <param name="desiredOutput"></param>
+    /// <returns></returns>
     public List<double> Go(List<double> inputValues, List<double> desiredOutput)
     {
         List<double> inputs = new List<double>();
@@ -82,6 +90,11 @@ public class ANN
         return outputs;
     }
 
+    /// <summary>
+    /// Update weights via back propagation and gradient error
+    /// </summary>
+    /// <param name="outputs"></param>
+    /// <param name="desiredOutput"></param>
     void UpdateWeights(List<double> outputs, List<double> desiredOutput) //just do back propogation
     {
         double error;
@@ -182,4 +195,5 @@ public class ANN
     {
         return value / (1 + Mathf.Abs((float)value));
     }
+    #endregion
 }

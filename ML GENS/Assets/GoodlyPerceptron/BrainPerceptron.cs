@@ -39,7 +39,14 @@ public class BrainPerceptron : MonoBehaviour {
 		Debug.Log(" 0 0 " + result[0]);
 	}
 
-	List<double> Train(double input1, double input2, double output) //can change it for more inputs and outputs. 
+    /// <summary>
+    /// Set parameters for training
+    /// </summary>
+    /// <param name="input1"></param>
+    /// <param name="input2"></param>
+    /// <param name="output"></param>
+    /// <returns></returns>
+    List<double> Train(double input1, double input2, double output) //can change it for more inputs and outputs. 
         //for example how to onload data from DB here and work with it and after that save it
 	{
 		List<double> inputs = new List<double>();
